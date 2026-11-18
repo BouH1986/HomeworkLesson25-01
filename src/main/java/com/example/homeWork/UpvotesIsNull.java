@@ -40,9 +40,9 @@ public class UpvotesIsNull {
                 List<Post> postsAll = mapper.readValue(jsonResponse, new TypeReference<>() {
                 });
 
-                List<Post> posts = postsAll.stream().filter(value -> value.getUpvotes() == null).toList();
+                List<Post> posts = postsAll.stream().filter(value -> value.getUpvotes() != null && value.getUpvotes() > 0).toList();
 
-                for (int i = 0; i < Math.min(2, posts.size()); i++) {
+                for (int i = 0; i < posts.size(); i++) {
                     Post post = posts.get(i);
                     System.out.println("Результат №" + (i + 1) + ": ");
                     System.out.println("ID: " + post.getId());
@@ -51,9 +51,6 @@ public class UpvotesIsNull {
                     System.out.println("User: " + post.getUser());
                     System.out.println("Upvotes: " + post.getUpvotes());
                     System.out.println();
-                    if (posts.size() > 2) {
-                        System.out.println("...");
-                    }
                 }
             } finally {
                 response.close();
